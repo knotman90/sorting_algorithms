@@ -1,4 +1,8 @@
 
+/*
+Author: Davide Spataro
+*/
+
 #ifndef DS_MERGE_SORT_H_
 #define DS_MERGE_SORT_H_
 
