@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <sorting_test_utils.h>
 #include <bubble_sort_tests.h>
-#include <insertion_sort_tests.h>
 #include <selection_sort_tests.h>
-
+#include <insertion_sort_tests.h>
+#include <merge_sort_tests.h>
 
 
 
@@ -36,7 +36,7 @@ INSTANTIATE_TEST_CASE_P(
     Values(2 , 4 , 8 , 16 , 32,64,128,256,512,1024,2048,2048*4, 155,13,25    )
 //Values( 0 , 1 , 2, 3, 6 )
     );
-/*
+
 template<class Container>
 bool checksorting(Container& v, bool incremental){
     int prev = v[0];

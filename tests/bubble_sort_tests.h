@@ -4,10 +4,11 @@
 #include <gtest/gtest.h>
 #include <sorting_test_utils.h>
 #include <bubble_sort.h>
-#include <common.h>
+//#include <common.h>
 
 
 TEST_P(RandomVectorSortTest, bubblesort){
+    std::cout<<"Input size = "<<v.size()<<std::endl;
     ASSERT_EQ(v.size(),SIZE);
     //DS::print(ALL(v));
     //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
@@ -18,6 +19,7 @@ TEST_P(RandomVectorSortTest, bubblesort){
 }
 
 TEST_P(RandomVectorSortTest, bubblesort_ascending){
+    std::cout<<"Input size = "<<v.size()<<std::endl;ASSERT_EQ(v.size(),SIZE);
     ASSERT_EQ(v.size(),SIZE);
     //DS::print(ALL(v));
     //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
