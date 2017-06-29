@@ -1,10 +1,9 @@
-
 #ifndef DS_SORTING_TEST_UTILS_H_
 #define DS_SORTING_TEST_UTILS_H_
 
 #include <gtest/gtest.h>
 #include <common.h>
-
+#include <utils.h>
 constexpr bool ASCENDING  = true;
 constexpr bool DESCENDING = false;
 
@@ -29,60 +28,13 @@ bool checksorting(Container& v, bool ascending) {
 	return true;
 }
 
-std::string random_string( size_t length )
-{
-	auto randchar = []() -> char
-	{
-		const char charset[] =
-		"0123456789"
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		"abcdefghijklmnopqrstuvwxyz";
-		const size_t max_index = (sizeof(charset) - 1);
-		return charset[ rand() % max_index ];
-	};
-	std::string str(length, 0);
-	std::generate_n( str.begin(), length, randchar );
-	return str;
-}
+
 
 using ::testing::TestWithParam;
 using ::testing::Values;
 using ::testing::Range;
 
-
-
-
-//for not to use string you have to comment the following function otherwise the overload would be ambiguous
-template<class T, class M>
-inline
-typename std::enable_if_t <
-std::is_integral<T>::value, T >
-randObject(const M _S) {
-	return (rand() % (_S * 2) + 1);
-}
-
-template<class T, class M>
-inline
-typename std::enable_if_t <
-std::is_floating_point<T>::value , T >
-randObject(const M _S) {
-	return _S * (static_cast<T> (rand() / static_cast<T> (RAND_MAX)));
-}
-
-/*
-template<class T,class M>
-inline
-typename std::enable_if_t<std::is_integral<M>::value,std::string>
-randObject(const M _S){
-	return random_string(_S);
-}*/
-
-
-
-//change type to the type of random object you want to g
-using TYPE 		=	long long;
-using SIZE_TYPE = 	std::size_t;
-
+//TYPE and size_TYPE defined in utils.h
 class RandomVectorSortTest : public ::testing::TestWithParam<int> {
 
 protected:
@@ -90,22 +42,15 @@ protected:
 public:
 	std::vector<TYPE> v;
 
-	void SetUp() {
-		srand(time(0));
+void SetUp() {
 		SIZE = GetParam();
-		if (SIZE <= 0)
-			return;
-		v.resize(SIZE);
-		size_t i = 0;
-		while (i < SIZE) {
-			v[i++] = static_cast<TYPE>(randObject<TYPE, SIZE_TYPE>(SIZE));
-
-		}
+		populateRandom(v,SIZE);
 	}
+
 };
 
 constexpr int START = 0;
-constexpr int END   = 50000;
+constexpr int END   = 70000;
 constexpr int RUNS  = 10; //change this
 constexpr int STEP  = (END - START) / RUNS;
 

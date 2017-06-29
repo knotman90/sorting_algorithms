@@ -49,7 +49,7 @@ void merge(Container& scratch,  Iterator s1,  Iterator e1,  Iterator e2, CMP_FN 
 }
 
 
-constexpr int TRIGGER_INSERTIONSORT = 4;
+constexpr int TRIGGER_INSERTIONSORT = 100;
 
 // CMP_FN has type: D -> D -> bool
 //range is [s,e] (e is in the range)
