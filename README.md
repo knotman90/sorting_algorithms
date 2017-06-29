@@ -1,5 +1,5 @@
 # sorting_algorithms
-Collection of sorting algorithms and their implementation in C++ff
+Collection of sorting algorithms and their implementation in C++11/14
 
 This repo contains a collection of C++ implementations of a number of sorting algorithms. It also contains tests (written using google test suite).
 
