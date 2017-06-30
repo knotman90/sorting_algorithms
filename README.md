@@ -1,14 +1,19 @@
 # sorting_algorithms
 Collection of sorting algorithms and their implementation in C++11/14
 
-This repo contains a collection of C++ implementations of a number of sorting algorithms. It also contains tests (written using google test suite).
+This repo contains a collection of C++ implementations of a number of sorting algorithms. It also contains tests (written using google test suite) and benchmark for each of the algorithms.
+
+![Benchmark Example]( https://image.ibb.co/cnLDQ5/test.png)
 
 ## Compiling and running the tests requires [Google Test](https://github.com/google/googletest) [Google Benchmark](https://github.com/google/benchmark) and Cmake
 
  - `cd sorting_algoritms`
  - `mkdir build && cd build`
  - `cmake -DCMAKE_BUILD_TYPE=Release ..`
- - `make && ./sorting_tests`
+ - `make`
+ - `./sorting_tests`
+ - `./sorting_benchmark`
+ 
  
  
  ## How to Contribute
