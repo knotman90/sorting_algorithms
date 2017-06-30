@@ -3,7 +3,7 @@ Collection of sorting algorithms and their implementation in C++11/14
 
 This repo contains a collection of C++ implementations of a number of sorting algorithms. It also contains tests (written using google test suite).
 
-## Compiling and running the tests requires [Google Test](https://github.com/google/googletest) and Cmake
+## Compiling and running the tests requires [Google Test](https://github.com/google/googletest) [Google Benchmark](https://github.com/google/benchmark) and Cmake
 
  - `cd sorting_algoritms`
  - `mkdir build && cd build`
@@ -11,7 +11,7 @@ This repo contains a collection of C++ implementations of a number of sorting al
  - `make && ./sorting_tests`
  
  
- How to Contribute:
+ ## How to Contribute
 - **Each algoirithm implementation should be in its own file in the `source` folder**.
 - **Make sure that the interface for the sorting algorithm is the following:**
 ```c++
@@ -50,6 +50,31 @@ TEST_P(RandomVectorSortTest, mergesort_ascending){
 }
 #ENDIF // DS_AWESOME_ALGORITHM_SORT_TESTS_H_
 ```
+
+- **Write a benchmark for the algorithm**
+- **Each benchmark in a separate file**
+- **A minimal benchmark could be the following**
+```c++
+
+static void selection_sort_BM(benchmark::State& state) {
+	while (state.KeepRunning())
+	{
+		state.PauseTiming();
+
+		Container v;
+		populateRandom(v, state.range(0)); //numbers of elements
+
+		state.ResumeTiming();
+
+		DS::selection_sort(begin(v), end(v), DS::gt<TYPE>);
+	}
+}
+
+BENCHMARK(selection_sort_BM)->Unit(benchmark::kMillisecond)->Range(RANGE_START, RANGE_END);
+
+#endif //DS_SELECTION_SORT_BENCH_H_
+```
+- **Make sure the only timed portion of the code is the sorting. Any initialization that is not relevant for measuring the speed of the algorithm should not be counted (use `	state.PauseTiming();` and `	state.ResumeTiming();`  as in the example).**
 
 
 
