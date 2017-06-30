@@ -297,57 +297,7 @@ void heapsort(Container& v, const int s,const int e, CMP_FN cmp) {
 
 }
 
-//----------------------------
-template<class Container, typename CMP_FN>
-inline int selectpivotidx(Container& v, const int s, const int e,CMP_FN cmp){
-    return e-1;
-}
 
-template<class Container, typename CMP_FN>
- int partition(Container& v, const int s, const int e,CMP_FN cmp){
-//Lomuto partition scheme
-    int pivotidx = selectpivotidx(v,s,e,cmp);
-    swap(v[pivotidx],v[e-1]);//put pivot in the last position
-    pivotidx = e-1;
-    const auto pivot = v[pivotidx];//last element
-    int i = s;
-    for(int j=s ; j<e ;j++)
-        if(cmp(v[j],pivot) ){
-            swap(v[i++],v[j]);
-
-        }
-    swap(v[i],v[pivotidx]);
-    return i;
-}
-
-#define TRIGGER_INSERTION (7)
-// CMP_FN has type: D -> D -> bool
-template < typename Container, typename CMP_FN>
-inline void quicksort(Container& v, const int s,const int e, CMP_FN cmp) {
-
-    if(e - s <= TRIGGER_INSERTION)
-        DS::insertionsort(v,s,e,cmp);
-    else{
-        const int p = partition(v,s,e,cmp);
-        quicksort(v,s,p,cmp);
-        quicksort(v,p+1,e,cmp);
-    }
-}
-
-//tail recursive version
-// CMP_FN has type: D -> D -> bool
-template < typename Container, typename CMP_FN>
-inline void quicksort_tr(Container& v,  int s,const int e, CMP_FN cmp) {
-    if(e - s <= TRIGGER_INSERTION)
-        DS::insertionsort(v,s,e,cmp);
-    else{
-        while(s < e){
-        const int p = partition(v,s,e,cmp);
-        quicksort(v,s,p,cmp);
-        s = p+1;
-        }
-    }
-}
 
 
 //-------QUICKSORT---------------------

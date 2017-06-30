@@ -8,8 +8,7 @@
 #include <utils.h>
 #include <vector>
 
-using TYPE = long long;
-using Container = std::vector<TYPE>;
+
 
 static void selection_sort_BM(benchmark::State& state) {
 	while (state.KeepRunning())
@@ -25,7 +24,7 @@ static void selection_sort_BM(benchmark::State& state) {
 	}
 }
 
-BENCHMARK(selection_sort_BM)->Unit(benchmark::kMillisecond)->Range(RANGE_START, RANGE_END);
+BENCHMARK(insertion_sort_BM)->Unit(benchmark::kMillisecond)->Range(RANGE_START, RANGE_END);
 
 
 #endif //DS_SELECTION_SORT_BENCH_H_

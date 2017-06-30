@@ -2,6 +2,7 @@
 #include<vector>
 #include "common.h"
 #include "merge_sort.h"
+#include "quick_sort_benchmark.h"
 using namespace std;
 
 
