@@ -198,6 +198,7 @@ void readVector(std::vector<T>& v, const int size, std::istream& is=std::cin) {
   }
 }
 
+
 template <typename T, unsigned int D>
 void readArray(std::array<T, D>& v, std::istream& is=std::cin) {
   LOOPUP(i, D) {
@@ -208,24 +209,7 @@ void readArray(std::array<T, D>& v, std::istream& is=std::cin) {
 }
 
 
-void read(auto& v, const unsigned int size, std::istream& is=std::cin) {
-    using T=typename std::remove_reference<decltype(v[0])>::type;
-  LOOPUP(i, size) {
-    T a;
-    is>> a;
-    v[i] = a;
-  }
-}
 
-void reverse(auto& v, const unsigned int size) {
-using T=typename std::remove_reference<decltype(v[0])>::type;
- LOOPUP(i, size/2) {
-    T a = v[i];
-    v[i]=v[size-1-i];
-    v[size-1-i] = a;
-  }
-
-}
 
 //midpoint between two iterators
 template<typename Iterator>

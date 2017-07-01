@@ -4,6 +4,10 @@
 #include <gtest/gtest.h>
 #include <common.h>
 #include <utils.h>
+#include <utils.h>
+#include <vector>
+#include <insertion_sort.h>
+
 constexpr bool ASCENDING  = true;
 constexpr bool DESCENDING = false;
 
@@ -50,7 +54,7 @@ void SetUp() {
 };
 
 constexpr int START = 0;
-constexpr int END   = 70000;
+constexpr int END   = 700;
 constexpr int RUNS  = 10; //change this
 constexpr int STEP  = (END - START) / RUNS;
 

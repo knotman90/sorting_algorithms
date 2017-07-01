@@ -1,7 +1,8 @@
 #ifndef _DS_UTILS_H
 #define _DS_UTILS_H
 
-#include<random>
+#include <random>
+#include <algorithm> //generate_n
 
 std::string random_string( size_t length )
 {
@@ -48,7 +49,7 @@ randObject(const M _S){
 }*/
 
 //change type to the type of random object you want to g
-typedef long long TYPE;
+typedef int TYPE;
 typedef std::size_t SIZE_TYPE;
 
 template<typename Container>

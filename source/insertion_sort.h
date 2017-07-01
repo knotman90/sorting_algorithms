@@ -16,7 +16,7 @@ void insertion_sort(Iterator s, Iterator e, CMP_FN cmp) {
 		auto it_curr = it;
 		auto it_prec = it - 1;
 		while ( it_prec >= s && cmp(*it_curr, *it_prec)  ) {
-			swap(*it_curr, *it_prec);
+			std::swap(*it_curr, *it_prec);
 			it_prec--;
 			it_curr--;
 		}

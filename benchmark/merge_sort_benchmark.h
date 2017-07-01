@@ -2,30 +2,17 @@
 #define DS_MERGE_SORT_BENCH_H_
 
 #include <benchmark/benchmark_api.h>
-#include <sorting_benchmark_utils.h>
 #include <common.h>
 #include <merge_sort.h>
-#include <utils.h>
-#include <vector>
+#include <sorting_benchmark_utils.h>
 
-using TYPE = long long;
-using Container = std::vector<TYPE>;
-
-static void merge_sort_BM(benchmark::State& state) {
-	while (state.KeepRunning())
-	{
-		state.PauseTiming();
-
-		Container v;
-		populateRandom(v, state.range(0)); //numbers of elements
-
-		state.ResumeTiming();
-
-		DS::mergesort(begin(v), end(v), DS::gt<TYPE>);
-	}
-}
-
-BENCHMARK(merge_sort_BM)->Unit(benchmark::kMillisecond)->Range(RANGE_START, RANGE_END);
+template <typename Iterator, typename CMP_FN>
+struct merge_sorter {
+  inline void operator()(Iterator s, Iterator e, CMP_FN cmp) {
+    return DS::mergesort(s, e, cmp);
+  }
+};
 
 
-#endif //DS_MERGE_SORT_BENCH_H_
+
+#endif  // DS_MERGE_SORT_BENCH_H_
