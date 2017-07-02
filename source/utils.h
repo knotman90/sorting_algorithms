@@ -60,7 +60,7 @@ void populateRandom(Container&v, const size_t SIZE) {
 		return;
 	v.resize(SIZE);
 	for (size_t i = 0; i < SIZE ; i++)
-		v[i++] = static_cast<TYPE>(randObject<TYPE, SIZE_TYPE>(SIZE, gen));
+		v[i] = static_cast<TYPE>(randObject<TYPE, SIZE_TYPE>(SIZE, gen));
 }
 
 

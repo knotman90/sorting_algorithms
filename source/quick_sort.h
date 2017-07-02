@@ -15,66 +15,29 @@
 namespace DS {
 
 
-int partition(int *arr, const int left, const int right) {
-    const int mid = left + (right - left) / 2;
-    const int pivot = arr[mid];
-    // move the mid point value to the front.
-    std::swap(arr[mid],arr[left]);
-    int i = left + 1;
-    int j = right;
-    while (i <= j) {
-        while(i <= j && arr[i] <= pivot) {
-            i++;
-        }
 
-        while(i <= j && arr[j] > pivot) {
-            j--;
-        }
-
-        if (i < j) {
-            std::swap(arr[i], arr[j]);
-        }
-    }
-    std::swap(arr[i - 1],arr[left]);
-    return i - 1;
-}
-
-template <typename Iterator, typename CMP_FN>
-void quicksort2(Iterator s, Iterator e, CMP_FN cmp) {
-  Iterator pivot_it = e - 1;
-  std::swap(*s, *pivot_it);  // move pivot at the front
-  Iterator i = s + 1, j = e;
-  auto pivot = *s;
-  while (i <= j) {
-    while (*i <= pivot) i++;
-    while (*j > pivot) j--;
-    if (i < j) {
-      std::swap(*i, *j);
-      i++;
-      j--;
-    }
-  }
-  // Recursion
-
-  if (s < j) quicksort2(s, j, cmp);
-
-  if (i < e) quicksort2(i, e, cmp);
-}
 
 /**
    @brief Return an Iterator to the Pivot element
-
    Return an Iterator to the Pivot element in the range [s,e]
    This particular implementation is the so called Lomuto partition scheme
 */
 template <typename Iterator, typename CMP_FN>
 inline const Iterator select_pivot(const Iterator s, const Iterator e,
                                    CMP_FN cmp) {
-  return e-1;
+  return e - 1;
 }
 
+/**
+   @brief Return an Iterator to the Pivot element
+   Partition the array around a pivot element p.
+   p gets its final position in the array so that all the elements
+   lower than it lie on lower indices. Same goes for greater indices that
+   lie on greater indices.
+   This particular implementation is the so called Lomuto partition scheme
+*/
 template <typename Iterator, typename CMP_FN>
-Iterator partition(Iterator s, Iterator e, CMP_FN cmp) {
+inline const Iterator partition_lomuto(Iterator s, Iterator e, CMP_FN cmp) {
   const Iterator pivot_it = DS::select_pivot(s, e, cmp);
   std::swap(*pivot_it, *(e - 1));  // put pivot in the last position
   const auto pivot = *pivot_it;
@@ -88,28 +51,67 @@ Iterator partition(Iterator s, Iterator e, CMP_FN cmp) {
   return insert_it;
 }
 
+/* Partition the elements of A, such that you first have elements smaller than
+ * "pivot", followed by eleemnts larger than "pivot". Return the last poistion of an
+ * element smaller or equal to "pivot".
+ */
+template <typename Iterator, typename CMP_FN>
+inline const Iterator partition_hoare(Iterator s, Iterator e, CMP_FN cmp) {
+  const Iterator pivot_it = s + distance(s, e - 1) / 2;
+  const auto pivot = *pivot_it;
+  // move the mid point value to the front.
+  std::swap(*pivot_it, *s);
+  Iterator i = s + 1;
+  Iterator j = e - 1;
+  while (i <= j) {
+    while (i <= j && cmp(*i, pivot))
+      i++;
+
+    while (i <= j && !cmp(*j, pivot))
+      j--;
+
+    if (i < j)
+      std::swap(*i, *j);
+  }
+  std::swap(*(i - 1), *s);
+ // std::cout<<"pivot is"<<*(i-1)<<"\n" ;
+  return (i - 1);
+}
+
 constexpr int TRIGGER_INSERTION = 5;
 // CMP_FN has type: D -> D -> bool
 template <typename Iterator, typename CMP_FN>
-void quicksort(Iterator s, Iterator e, CMP_FN cmp) {
+void quicksort_hoare(/*const Iterator begin,*/const Iterator s, const Iterator e, CMP_FN cmp) {
+ /*  auto index= [](auto begin, auto it) {
+    return distance(it,begin);
+   };
+   static int i=0;
+  for(int k=0;k<i;k++)
+    std::cout<<"\t";
+  std::cout<<index(begin,s)<<" - "<<index(begin,e)<<"\n";
+  i++;*/
   if (std::distance(s, e) <= TRIGGER_INSERTION)
     DS::insertion_sort(s, e, cmp);
   else {
-    const Iterator p = DS::partition(s, e, cmp);
-    quicksort(s, p, cmp);
-    quicksort(p + 1, e, cmp);
+    const Iterator p = DS::partition_hoare(s, e, cmp);
+    quicksort_hoare(/*begin,*/s, p, cmp);
+    quicksort_hoare(/*begin,*/p + 1, e, cmp);
+  }
+  //i--;
+}
+
+// CMP_FN has type: D -> D -> bool
+template <typename Iterator, typename CMP_FN>
+void quicksort_lomuto(Iterator s, Iterator e, CMP_FN cmp) {
+  if (std::distance(s, e) <= TRIGGER_INSERTION)
+    DS::insertion_sort(s, e, cmp);
+  else {
+    const Iterator p = DS::partition_lomuto(s, e, cmp);
+    quicksort_lomuto(s, p, cmp);
+    quicksort_lomuto(p + 1, e, cmp);
   }
 }
-/*
-Quicksort(A, p, r)
-{
- while (p < r)
- {
-  q: <- Partition(A, p, r)
-  Quicksort(A, p, q)
-  p: <- q+1
- }
-}*/
+
 // tail recursive version
 // CMP_FN has type: D -> D -> bool
 template <typename Iterator, typename CMP_FN>
@@ -118,12 +120,45 @@ void quicksort_tail_recursive(Iterator s, Iterator e, CMP_FN cmp) {
     DS::insertion_sort(s, e, cmp);
   else {
     while (s < e) {
-      const Iterator p = DS::partition(s, e, cmp);
+      const Iterator p = DS::partition_hoare(s, e, cmp);
       quicksort_tail_recursive(s, p, cmp);
       s = p + 1;
     }
   }
 }
+
+/*template <typename Iterator, typename CMP_FN>
+void quicksort_tail_recursive(Iterator s, Iterator e, CMP_FN cmp)
+{
+  static int i=0;
+  i++;
+  if (std::distance(s, e) <= TRIGGER_INSERTION)
+    DS::insertion_sort(s, e, cmp);
+  else {
+    while (s < e) {
+      std::cout<<"here"<<i<<"\n";
+      const Iterator p = DS::partition_lomuto(s, e, cmp);
+
+      if (distance(s, p) <= distance(p, e))
+      {
+        quicksort_tail_recursive(s, p, cmp);
+        s = p;
+      } else {
+        quicksort_tail_recursive(p, e, cmp);
+        e = p - 1;
+      }
+    }
+
+  }
+
+}*/
+
+
+
+
+
+using namespace std;
+
 
 }  // namespace DS
 

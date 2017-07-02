@@ -54,8 +54,8 @@ void SetUp() {
 };
 
 constexpr int START = 0;
-constexpr int END   = 700;
-constexpr int RUNS  = 10; //change this
+constexpr int END   = 300;
+constexpr int RUNS  = 2; //change this
 constexpr int STEP  = (END - START) / RUNS;
 
 INSTANTIATE_TEST_CASE_P(
