@@ -5,7 +5,7 @@
 #include <insertion_sort_tests.h>
 #include <merge_sort_tests.h>*/
 #include <quick_sort_tests.h>
-
+#include <heap_sort_tests.h>
 
 
 /*using ::testing::TestWithParam;
