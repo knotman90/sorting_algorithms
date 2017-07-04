@@ -4,9 +4,9 @@
 #include <bubble_sort.h>
 #include <sorting_benchmark_utils.h>
 
-template <typename Iterator, typename CMP_FN>
+template <typename Iterator, typename Compare>
 struct bubblesorter {
-  inline void operator()(Iterator s, Iterator e, CMP_FN cmp) {
+  inline void operator()(Iterator s, Iterator e, Compare cmp) {
     return DS::bubblesort(s, e, cmp);
   }
 };

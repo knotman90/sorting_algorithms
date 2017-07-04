@@ -11,14 +11,16 @@
 #include <merge_sort_benchmark.h>
 #include <insertion_sort_benchmark.h>
 #include <selection_sort_benchmark.h>
+#include <heap_sort_benchmark.h>
+#include <shell_sort_benchmark.h>
 
 
 
-constexpr size_t RANGE_START_SLOW = 1 << 5;
+constexpr size_t RANGE_START_SLOW = 1 << 10;
 constexpr size_t RANGE_END_SLOW   = 1 << 16;
 
-constexpr size_t RANGE_START_FAST = 1 << 10;
-constexpr size_t RANGE_END_FAST   = 1 << 25;
+constexpr size_t RANGE_START_FAST = 1 << 15;
+constexpr size_t RANGE_END_FAST   = 1 << 24;
 constexpr int RANGE_MULTIPLIER = 2;
 
 
@@ -76,10 +78,45 @@ BENCHMARK_TEMPLATE(benchmark_random_values, bubblesorter)
 BENCHMARK_TEMPLATE(benchmark_random_values, insertion_sorter)
     ->Unit(TIME_UNIT)
     ->MinTime(MIN_TIME)
+    ->RangeMultiplier(RANGE_MULTIPLIER)
     ->Range(RANGE_START_SLOW, RANGE_END_SLOW);
 
-
 //---------------------------FAST ALGORITHMS-----------------------------------
+
+// -----------------shell sort benchamarks for differenet gap sequences ------------------
+/////////////////////////////////////////////////
+/// @Brief Shell Sort A154393 gap sequenece on 
+/// random values benchmark
+/////////////////////////////////////////////////
+BENCHMARK_TEMPLATE(benchmark_random_values, shell_sort_A154393_sorter)
+    ->Unit(TIME_UNIT)
+    ->MinTime(MIN_TIME)
+    ->RangeMultiplier(RANGE_MULTIPLIER)
+    ->Range(RANGE_START_FAST, RANGE_END_FAST);
+
+/////////////////////////////////////////////////
+/// @Brief Shell Sort A154393 gap sequenece on 
+/// random values benchmark
+/////////////////////////////////////////////////
+BENCHMARK_TEMPLATE(benchmark_random_values, sshell_sort_sedgewick_sorter)
+    ->Unit(TIME_UNIT)
+    ->MinTime(MIN_TIME)
+    ->RangeMultiplier(RANGE_MULTIPLIER)
+    ->Range(RANGE_START_FAST, RANGE_END_FAST);
+
+/////////////////////////////////////////////////
+/// @Brief Shell Sort A154393 gap sequenece on 
+/// random values benchmark
+/////////////////////////////////////////////////
+BENCHMARK_TEMPLATE(benchmark_random_values, shell_sort_sedgewick_incerpi_sorter)
+    ->Unit(TIME_UNIT)
+    ->MinTime(MIN_TIME)
+    ->RangeMultiplier(RANGE_MULTIPLIER)
+    ->Range(RANGE_START_FAST, RANGE_END_FAST);
+
+
+// --------------------------------------------------------------------------------------
+
 
 /////////////////////////////////////////////////
 /// @Brief Merge Sort random values benchmark
@@ -98,7 +135,6 @@ BENCHMARK_TEMPLATE(benchmark_random_values, quicksorter_lomuto)
 ->RangeMultiplier(RANGE_MULTIPLIER)
 ->Range(RANGE_START_FAST, RANGE_END_FAST);
 
-
 /////////////////////////////////////////////////
 /// @Brief Quick Sort random values benchmark
 /////////////////////////////////////////////////
@@ -109,13 +145,12 @@ BENCHMARK_TEMPLATE(benchmark_random_values, quicksorter_hoare)
 ->Range(RANGE_START_FAST, RANGE_END_FAST);
 
 
-
 /////////////////////////////////////////////////
 /// @Brief Quick Sort random values benchmark
 /////////////////////////////////////////////////
-template <typename Iterator, typename CMP_FN>
+template <typename Iterator, typename Compare>
 struct sorter_std{
-  inline void operator()(Iterator s, Iterator e, CMP_FN cmp) {
+  inline void operator()(Iterator s, Iterator e, Compare cmp) {
     return std::sort(s, e, cmp);
   }
 };
@@ -124,6 +159,35 @@ BENCHMARK_TEMPLATE(benchmark_random_values, sorter_std)
     ->MinTime(MIN_TIME)
     ->RangeMultiplier(RANGE_MULTIPLIER)
     ->Range(RANGE_START_FAST, RANGE_END_FAST);
+
+
+/////////////////////////////////////////////////
+/// @Brief Heap Sort random values benchmark
+/////////////////////////////////////////////////
+BENCHMARK_TEMPLATE(benchmark_random_values, heap_sorter)
+    ->Unit(TIME_UNIT)
+    ->MinTime(MIN_TIME)
+    ->RangeMultiplier(RANGE_MULTIPLIER)
+    ->Range(RANGE_START_FAST, RANGE_END_FAST);
+
+
+/////////////////////////////////////////////////
+/// @Brief Heap Sort std library random values benchmark
+/////////////////////////////////////////////////
+ template <typename Iterator, typename Compare>
+struct sort_heap_std{
+  inline void operator()(Iterator s, Iterator e, Compare cmp) {
+    std::make_heap(s,e,cmp);
+    return std::sort_heap(s, e, cmp);
+  }
+};
+
+BENCHMARK_TEMPLATE(benchmark_random_values, sort_heap_std)
+    ->Unit(TIME_UNIT)
+    ->MinTime(MIN_TIME)
+    ->RangeMultiplier(RANGE_MULTIPLIER)
+    ->Range(RANGE_START_FAST, RANGE_END_FAST);
+
 
 /*
 /////////////////////////////////////////////////
@@ -134,9 +198,10 @@ BENCHMARK_TEMPLATE(benchmark_random_values, quicksorter_tail_recursive)
     ->MinTime(MIN_TIME)
     ->Range(RANGE_START, RANGE_END);
 
-
-
 */
+
+
+
 
 /*
 void benchmark_quicksort_T(benchmark::State& state) {

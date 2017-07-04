@@ -9,6 +9,7 @@
 
 
 
+
 // incremental loops
 #define loop0n(i, n) for (int i = 0; i < n; ++i)
 #define loopse(i, s, e) for (int i = s; i < e; ++i)
@@ -59,16 +60,16 @@ void print(Iterator s, Iterator e) {
   std::cout << "\n";
 }
 
-// this has to be specialized for each class that is SWAPPABLE
+/*// this has to be specialized for each class that is SWAPPABLE
 template <class T>
 inline void swap(T& a, T& b) {
  const  T a_copy = a;
   a = b;
   b = a_copy;
-}
+}*/
 
-template <class T2, size_t N>
-void swap(T2(&a)[N], T2(&b)[N]);
+/*template <class T2, size_t N>
+void swap(T2(&a)[N], T2(&b)[N]);*/
 // swap ranges
 
 // -- Non-modifying sequence operations --

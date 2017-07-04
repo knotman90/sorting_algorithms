@@ -1,5 +1,3 @@
-
-
 /*
  Author: Davide Spataro
  */
@@ -9,9 +7,9 @@
 
 namespace DS {
 
-// CMP_FN has type: D -> D -> bool
-template < typename Iterator, typename CMP_FN>
-void selection_sort(Iterator s, Iterator e, CMP_FN cmp) {
+// Compare has type: D -> D -> bool
+template < typename Iterator, typename Compare>
+void selection_sort(Iterator s, Iterator e, Compare cmp) {
 
 	for (auto it  = s ; it < e ; it++) {
 		auto it_min = it;
@@ -19,7 +17,7 @@ void selection_sort(Iterator s, Iterator e, CMP_FN cmp) {
 			if (cmp(*it1, *it_min)) {
 				it_min = it1;
 			}
-		swap(*it, *it_min);
+		std::swap(*it, *it_min);
 	}
 }
 

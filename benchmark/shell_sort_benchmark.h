@@ -1,38 +1,40 @@
-#ifndef DS_QUICK_SORT_BENCH_H_
-#define DS_QUICK_SORT_BENCH_H_
+#ifndef DS_SHELL_SORT_BENCH_H_
+#define DS_SHELL_SORT_BENCH_H_
 
-#include <quick_sort.h>
+#include <shell_sort.h>
 #include <sorting_benchmark_utils.h>
 
+//shell sort with different gap sequences 
+
 template <typename Iterator, typename Compare>
-struct quicksorter_lomuto {
+struct sshell_sort_sedgewick_sorter {
   inline void operator()(Iterator s, Iterator e, Compare cmp) {
-    return DS::quicksort_lomuto(s, e, cmp);
+    return DS::shell_sort_sedgewick(s, e, cmp);
   }
 };
 
 template <typename Iterator, typename Compare>
-struct quicksorter_hoare {
+struct shell_sort_A154393_sorter {
   inline void operator()(Iterator s, Iterator e, Compare cmp) {
-    return DS::quicksort_hoare(s, e, cmp);
+    return DS::shell_sort_A154393(s, e, cmp);
+  }
+};
+
+
+template <typename Iterator, typename Compare>
+struct shell_sort_sedgewick_incerpi_sorter {
+  inline void operator()(Iterator s, Iterator e, Compare cmp) {
+    return DS::shell_sort_sedgewick_incerpi(s, e, cmp);
   }
 };
 
 template <typename Iterator, typename Compare>
-struct quicksorter_tail_recursive{
+struct shell_sort_fibonacci_sorter {
   inline void operator()(Iterator s, Iterator e, Compare cmp) {
-    return DS::quicksort_tail_recursive(s, e, cmp);
-  }
-};
-
-template <typename Iterator, typename Compare>
-struct quicksorter_std{
-  inline void operator()(Iterator s, Iterator e, Compare cmp) {
-    return std::sort(s, e, cmp);
+    return DS::shell_sort_fibonacci(s, e, cmp);
   }
 };
 
 
 
-
-#endif  // DS_QUICK_SORT_BENCH_H_
+#endif  // DS_MERGE_SORT_BENCH_H_

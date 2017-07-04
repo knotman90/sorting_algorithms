@@ -4,9 +4,9 @@
 #include <insertion_sort.h>
 #include <sorting_benchmark_utils.h>
 
-template <typename Iterator, typename CMP_FN>
+template <typename Iterator, typename Compare>
 struct insertion_sorter {
-  inline void operator()(Iterator s, Iterator e, CMP_FN cmp) {
+  inline void operator()(Iterator s, Iterator e, Compare cmp) {
     return DS::insertion_sort(s, e, cmp);
   }
 };

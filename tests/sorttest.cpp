@@ -1,11 +1,12 @@
 #include <gtest/gtest.h>
 #include <sorting_test_utils.h>
-/*//#include <bubble_sort_tests.h>
-//#include <selection_sort_tests.h>
+#include <bubble_sort_tests.h>
+#include <selection_sort_tests.h>
 #include <insertion_sort_tests.h>
-#include <merge_sort_tests.h>*/
+#include <merge_sort_tests.h>
 #include <quick_sort_tests.h>
 #include <heap_sort_tests.h>
+#include <shell_sort_tests.h>
 
 
 /*using ::testing::TestWithParam;

@@ -4,9 +4,9 @@
 #include <selection_sort.h>
 #include <sorting_benchmark_utils.h>
 
-template <typename Iterator, typename CMP_FN>
+template <typename Iterator, typename Compare>
 struct selection_sorter {
-  inline void operator()(Iterator s, Iterator e, CMP_FN cmp) {
+  inline void operator()(Iterator s, Iterator e, Compare cmp) {
     return DS::selection_sort(s, e, cmp);
   }
 };

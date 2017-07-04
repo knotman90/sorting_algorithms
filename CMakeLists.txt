@@ -4,10 +4,10 @@ project(SORTING)
 
 set (CMAKE_CXX_STANDARD 14)
 if ( CMAKE_COMPILER_IS_GNUCC )
-    set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall")
+    set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -g")
 endif ( CMAKE_COMPILER_IS_GNUCC )
 if ( MSVC )
-    set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /W4")
+    set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /W4" -g)
 endif ( MSVC )
 
 

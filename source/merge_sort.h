@@ -11,11 +11,11 @@ Author: Davide Spataro
 namespace DS {
 //-------MERGSORT---------------------
 
-// CMP_FN has type: D -> D -> bool
+// Compare has type: D -> D -> bool
 //[s1,e1] and [e1+1,e2] are two ordered sequences. This methods reaggarne the whole
 // interval [s1,e2] in a sorted sequence
-template < typename Container, typename Iterator, typename CMP_FN>
-void merge(Container& scratch,  Iterator s1,  Iterator e1,  Iterator e2, CMP_FN cmp, Iterator scratch_s) {
+template < typename Container, typename Iterator, typename Compare>
+void merge(Container& scratch,  Iterator s1,  Iterator e1,  Iterator e2, Compare cmp, Iterator scratch_s) {
 	Iterator s2 = e1 + 1;
 	Iterator startv = s1;
 	Iterator starts = scratch_s;
@@ -51,10 +51,10 @@ void merge(Container& scratch,  Iterator s1,  Iterator e1,  Iterator e2, CMP_FN 
 
 constexpr int TRIGGER_INSERTIONSORT = 100;
 
-// CMP_FN has type: D -> D -> bool
+// Compare has type: D -> D -> bool
 //range is [s,e] (e is in the range)
-template < typename Container, typename Iterator, typename CMP_FN>
-void mergesort_helper(Container& scratch, Iterator s, Iterator e, CMP_FN cmp, Iterator scratch_s) {
+template < typename Container, typename Iterator, typename Compare>
+void mergesort_helper(Container& scratch, Iterator s, Iterator e, Compare cmp, Iterator scratch_s) {
 	if (std::distance(s, e) <= TRIGGER_INSERTIONSORT)
 		DS::insertion_sort( s, e + 1, cmp);
 	else { // if (distance(s,e)>TRIGGER_INSERTIONSORT) {
@@ -74,9 +74,9 @@ void mergesort_helper(Container& scratch, Iterator s, Iterator e, CMP_FN cmp, It
 }
 
 
-// CMP_FN has type: D -> D -> bool
-template < typename Iterator, typename CMP_FN>
-void mergesort(Iterator s, Iterator e, CMP_FN cmp) {//(Container& v, const int s, const int e, CMP_FN cmp) {
+// Compare has type: D -> D -> bool
+template < typename Iterator, typename Compare>
+void mergesort(Iterator s, Iterator e, Compare cmp) {//(Container& v, const int s, const int e, Compare cmp) {
 	using type = typename std::iterator_traits<Iterator>::value_type;
 	std::vector<type> scratch(std::distance(s, e));
 	mergesort_helper(scratch, s, e - 1, cmp, scratch.begin());
