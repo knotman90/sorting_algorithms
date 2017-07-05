@@ -13,6 +13,7 @@
 #include <selection_sort_benchmark.h>
 #include <heap_sort_benchmark.h>
 #include <shell_sort_benchmark.h>
+#include <intro_sort_benchmark.h>
 
 
 
@@ -126,6 +127,7 @@ BENCHMARK_TEMPLATE(benchmark_random_values, merge_sorter)
 ->MinTime(MIN_TIME)
 ->RangeMultiplier(RANGE_MULTIPLIER)
 ->Range(RANGE_START_FAST, RANGE_END_FAST);
+
 /////////////////////////////////////////////////
 /// @Brief Quick Sort random values benchmark
 /////////////////////////////////////////////////
@@ -189,17 +191,25 @@ BENCHMARK_TEMPLATE(benchmark_random_values, sort_heap_std)
     ->Range(RANGE_START_FAST, RANGE_END_FAST);
 
 
-/*
+
 /////////////////////////////////////////////////
-/// @Brief Quick Sort random values benchmark
+/// @Brief Intro Sort random values benchmark
 /////////////////////////////////////////////////
-BENCHMARK_TEMPLATE(benchmark_random_values, quicksorter_tail_recursive)
+BENCHMARK_TEMPLATE(benchmark_random_values, introsorter_lomuto)
     ->Unit(TIME_UNIT)
     ->MinTime(MIN_TIME)
-    ->Range(RANGE_START, RANGE_END);
+    ->RangeMultiplier(RANGE_MULTIPLIER)
+    ->Range(RANGE_START_FAST, RANGE_END_FAST);
 
-*/
 
+/////////////////////////////////////////////////
+/// @Brief Intro Sort random values benchmark hoare partition scheme
+/////////////////////////////////////////////////
+BENCHMARK_TEMPLATE(benchmark_random_values, introsorter_hoare)
+    ->Unit(TIME_UNIT)
+    ->MinTime(MIN_TIME)
+    ->RangeMultiplier(RANGE_MULTIPLIER)
+    ->Range(RANGE_START_FAST, RANGE_END_FAST);
 
 
 

@@ -78,7 +78,7 @@ inline const Iterator partition_hoare(Iterator s, Iterator e, Compare cmp) {
   return (i - 1);
 }
 
-constexpr int TRIGGER_INSERTION = 5;
+constexpr int TRIGGER_INSERTION = 16;
 // Compare has type: D -> D -> bool
 template <typename Iterator, typename Compare>
 void quicksort_hoare(/*const Iterator begin,*/const Iterator s, const Iterator e, Compare cmp) {
