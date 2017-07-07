@@ -11,23 +11,23 @@ namespace DS {
 #define LEFT_CHILD(BEGIN, IDX)  (std::advance(IDX, std::distance(BEGIN, IDX) + 1))
 #define RIGHT_CHILD(BEGIN, IDX) (std::advance(IDX, std::distance(BEGIN, IDX) + 2))
 /////////////////////////////////////////////////
-/// @Brief Binary Heap: return the index 
+/// @Brief Binary Heap: return the index
 /// of the left child of the element with index idx
-/// Note that it can computed as (idx<<1) 
+/// Note that it can computed as (idx<<1)
 /// Compiler should be able to generate  one istruction inlined
 /////////////////////////////////////////////////
 template <typename Iterator>
 inline Iterator left_child(const Iterator begin, const Iterator end,
                            Iterator idx) {
   const auto d_idx_beg = distance(begin, idx);
-  if (distance(idx, end-2) >= d_idx_beg)
+  if (distance(idx, end - 2) >= d_idx_beg)
     return idx + (d_idx_beg + 1);
   else
     return end;
 }
 
 /////////////////////////////////////////////////
-/// @Brief Binary Heap: return the index 
+/// @Brief Binary Heap: return the index
 /// of the right child of the element with index idx
 // Note that it can computed as (idx<<1)|1
 //Compiler should be able to generate  one istruction inlined
@@ -36,7 +36,7 @@ template <class Iterator>
 inline Iterator right_child(const Iterator begin, const Iterator end,
                             Iterator idx) {
   const auto d_idx_beg = distance(begin, idx);
-  if (distance(idx, end-3) >= d_idx_beg)
+  if (distance(idx, end - 3) >= d_idx_beg)
     return idx + (d_idx_beg + 2);
   else
     return end;
@@ -54,18 +54,18 @@ inline Iterator parent(Iterator begin, Iterator idx) {
 }
 
 /////////////////////////////////////////////////
-/// @Brief Given an iterator to an element 
+/// @Brief Given an iterator to an element
 /// idx of the heap that might not satisfy the heap property
-/// but with valid heaps rooted at its children it enforces 
+/// but with valid heaps rooted at its children it enforces
 /// the heap property on the whole dataset rooted at idx
-/// !cmp is used because the we need reversed ordere. 
+/// !cmp is used because the we need reversed ordere.
 /// LT should produce and ascending order.
 /////////////////////////////////////////////////
 template <typename Iterator, typename Compare>
-void heapify_l(const Iterator begin, const Iterator end, Iterator idx,
-             Compare cmp) {
-  const Iterator left (left_child(begin, end,idx));
-  const Iterator right (right_child(begin, end,idx));
+void sift_down_l(const Iterator begin, const Iterator end, Iterator idx,
+                 Compare cmp) {
+  const Iterator left (left_child(begin, end, idx));
+  const Iterator right (right_child(begin, end, idx));
   Iterator candidate (idx);
   if (left < end && !cmp(*left, *idx)) candidate = left;
 
@@ -73,23 +73,23 @@ void heapify_l(const Iterator begin, const Iterator end, Iterator idx,
 
   if (candidate != idx) {
     std::swap(*candidate, *idx);
-    heapify(begin, end, candidate, cmp);
+    sift_down_l(begin, end, candidate, cmp);
   }
 }
 
 template <typename Iterator, typename Compare>
-inline void heapify(const Iterator begin, const Iterator end, Iterator idx,
-                       Compare cmp) {
+inline void sift_down(const Iterator begin, const Iterator end, Iterator idx,
+                      Compare cmp) {
   bool go = true;
   while (go) {
     const Iterator left(left_child(begin, end, idx));
     const Iterator right(right_child(begin, end, idx));
     Iterator candidate(idx);
     // this if relies on if short circuiting cmp has to be guarded for segfault
-    if (left < end && !cmp(*left, *idx)) 
+    if (left < end && !cmp(*left, *idx))
       candidate = left;
-  //this if relies on if short circuiting cmp has to be guarded for segfault
-    if (right < end && !cmp(*right, *candidate)) 
+    //this if relies on if short circuiting cmp has to be guarded for segfault
+    if (right < end && !cmp(*right, *candidate))
       candidate = right;
 
     if (candidate != idx) {
@@ -101,16 +101,16 @@ inline void heapify(const Iterator begin, const Iterator end, Iterator idx,
 }
 
 /////////////////////////////////////////////////
-/// @Brief Transform a range of elements [begin,end[ 
+/// @Brief Transform a range of elements [begin,end[
 /// into a binary heap. The heap property is encapsulated in cmp
 /// Assume [begin,end[ contains at least one element
 /////////////////////////////////////////////////
 template <typename Iterator, typename Compare>
-inline void build_heap(const Iterator begin, const Iterator end, Compare cmp) {
+inline void make_heap(const Iterator begin, const Iterator end, Compare cmp) {
   const auto d = distance(begin, end) / 2;
   for (Iterator s = begin + d; s >= begin; s--)
-    heapify(begin, end, s, cmp);
-  
+    sift_down(begin, end, s, cmp);
+
 }
 
 
@@ -120,18 +120,18 @@ inline void build_heap(const Iterator begin, const Iterator end, Compare cmp) {
 /////////////////////////////////////////////////
 template <typename Iterator, typename Compare>
 void heap_sort(Iterator s, Iterator e, Compare cmp) {
-  auto d = std::distance(s,e);
-  if(d <= 1)
+  auto d = std::distance(s, e);
+  if (d <= 1)
     return;
 
-  build_heap(s, e, cmp);
-  while(d--){
+  DS::make_heap(s, e, cmp);
+  while (d--) {
     e--;
     std::swap(*s, *e);
-    heapify(s, e, s, cmp);
+    sift_down(s, e, s, cmp);
   }
 }
-
+/*
 void a(){
         std::vector<int> b = {10,2,3,4,5,6,7,8,9};
 std::srand ( unsigned ( std::time(0) ) );
@@ -142,26 +142,26 @@ std::srand ( unsigned ( std::time(0) ) );
 
         for(auto s = begin(b); s<begin(b)+std::distance(begin(b),end(b))/2; s++)
                 std::cout<<*s<<" "<<*(left_child(begin(b),end(b),s))<<" "<<*(right_child(begin(b),end(b),s))<<std::endl;
-        std::cout<<"heapify\n";
+        std::cout<<"sift_down\n";
 
-        heapify(b.begin(),b.end(), b.begin(),DS::gt<int>);
+        sift_down(b.begin(),b.end(), b.begin(),DS::gt<int>);
 
         DS::print(begin(b),end(b));
 
-        std::cout<<"build_heap\n";
+        std::cout<<"make_heap\n";
         b.clear();
         int n = 0;
         b.resize(15);
     std::generate(b.begin(), b.end(), [&n]{ return n++; });
         DS::print(begin(b),end(b));
         std::random_shuffle(begin(b),end(b));
-        build_heap(begin(b),end(b),DS::lt<int>);
+        make_heap(begin(b),end(b),DS::lt<int>);
         DS::print(begin(b),end(b));
 std::cout<<"heap sorting\n";
         heap_sort(begin(b),end(b),DS::lt<int>);
         DS::print(begin(b),end(b));
 }
-
+*/
 }// namespace DS
 
 #endif //DS_HEAP_SORT_H_
