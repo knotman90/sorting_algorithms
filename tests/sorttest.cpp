@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <sorting_test_utils.h>
+#include <comb_sort_tests.h>
 #include <bubble_sort_tests.h>
 #include <selection_sort_tests.h>
 #include <insertion_sort_tests.h>

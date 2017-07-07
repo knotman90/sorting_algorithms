@@ -11,6 +11,12 @@ struct insertion_sorter {
   }
 };
 
+template <typename Iterator, typename Compare>
+struct maybeis_insertion_sort_sorter {
+  inline void operator()(Iterator s, Iterator e, Compare cmp) {
+    return DS::maybeis_insertion_sort(s, e, cmp);
+  }
+};
 
 
 #endif  // DS_MERGE_SORT_BENCH_H_

@@ -7,6 +7,7 @@
 #include <utils.h>
 #include <common.h>
 #include <bubble_sort_benchmark.h>
+#include <comb_sort_benchmark.h>
 #include <quick_sort_benchmark.h>
 #include <merge_sort_benchmark.h>
 #include <insertion_sort_benchmark.h>
@@ -50,7 +51,32 @@ void benchmark_random_values(benchmark::State& state) {
     }
 }
 
+/////////////////////////////////////////////////
+/// @Brief Comb Sort random values benchmark
+/////////////////////////////////////////////////
+BENCHMARK_TEMPLATE(benchmark_random_values, comb_sorter)
+->Unit(TIME_UNIT)
+->MinTime(MIN_TIME)
+->RangeMultiplier(RANGE_MULTIPLIER)
+->Range(RANGE_START_SLOW, RANGE_END_SLOW);
 
+/////////////////////////////////////////////////
+/// @Brief Bubble Sort random values benchmark
+/////////////////////////////////////////////////
+BENCHMARK_TEMPLATE(benchmark_random_values, bubblesorter_naive)
+->Unit(TIME_UNIT)
+->MinTime(MIN_TIME)
+->RangeMultiplier(RANGE_MULTIPLIER)
+->Range(RANGE_START_SLOW, RANGE_END_SLOW);
+
+/////////////////////////////////////////////////
+/// @Brief Bubble Sort improved random values benchmark
+/////////////////////////////////////////////////
+BENCHMARK_TEMPLATE(benchmark_random_values, bubblesorter_improved)
+->Unit(TIME_UNIT)
+->MinTime(MIN_TIME)
+->RangeMultiplier(RANGE_MULTIPLIER)
+->Range(RANGE_START_SLOW, RANGE_END_SLOW);
 
 /////////////////////////////////////////////////
 /// @Brief Selection Sort random values benchmark
@@ -63,14 +89,15 @@ BENCHMARK_TEMPLATE(benchmark_random_values, selection_sorter)
 
 
 
+
 /////////////////////////////////////////////////
-/// @Brief Bubble Sort random values benchmark
+/// @Brief Insertion Sort random values benchmark
 /////////////////////////////////////////////////
-BENCHMARK_TEMPLATE(benchmark_random_values, bubblesorter)
-->Unit(TIME_UNIT)
-->MinTime(MIN_TIME)
-->RangeMultiplier(RANGE_MULTIPLIER)
-->Range(RANGE_START_SLOW, RANGE_END_SLOW);
+BENCHMARK_TEMPLATE(benchmark_random_values, maybeis_insertion_sort_sorter)
+    ->Unit(TIME_UNIT)
+    ->MinTime(MIN_TIME)
+    ->RangeMultiplier(RANGE_MULTIPLIER)
+    ->Range(RANGE_START_SLOW, RANGE_END_SLOW);
 
 
 /////////////////////////////////////////////////
