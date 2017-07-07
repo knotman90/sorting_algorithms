@@ -78,6 +78,7 @@ static const std::ptrdiff_t fibonacci_sequence[] = {
 template <typename Gap , typename Iterator, typename Compare>
 void insertion_sort_gap(Iterator s, Iterator e, Compare cmp, const Gap& gap) {
 	
+  //should be std::distance(s, e-1)
 	if (std::distance(s, e) <= gap)
 		return;
 	for (auto it = s + gap ; it < e ; it++) {
