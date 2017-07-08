@@ -14,20 +14,6 @@
 #include <insertion_sort.h>
 namespace DS {
 
-
-
-
-/**
-   @brief Return an Iterator to the Pivot element
-   Return an Iterator to the Pivot element in the range [s,e]
-   This particular implementation is the so called Lomuto partition scheme
-*/
-template <typename Iterator, typename Compare>
-inline const Iterator select_pivot(const Iterator s, const Iterator e,
-                                   Compare cmp) {
-  return e - 1;
-}
-
 /**
    @brief Return an Iterator to the Pivot element
    Partition the array around a pivot element p.
@@ -38,7 +24,7 @@ inline const Iterator select_pivot(const Iterator s, const Iterator e,
 */
 template <typename Iterator, typename Compare>
 inline const Iterator partition_lomuto(Iterator s, Iterator e, Compare cmp) {
-  const Iterator pivot_it = DS::select_pivot(s, e, cmp);
+  const Iterator pivot_it = e - 1; //the last element
   std::swap(*pivot_it, *(e - 1));  // put pivot in the last position
   const auto pivot = *pivot_it;
   Iterator insert_it = s;

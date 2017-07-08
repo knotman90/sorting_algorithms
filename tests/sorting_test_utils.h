@@ -53,8 +53,8 @@ void SetUp() {
 
 };
 
-constexpr int START = 0;
-constexpr int END   = 5000;
+constexpr int START = 5;
+constexpr int END   = 100;
 constexpr int RUNS  = 20; //change this
 constexpr int STEP  = (END - START) / RUNS;
 

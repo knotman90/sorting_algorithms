@@ -7,6 +7,7 @@
 #include <utils.h>
 #include <common.h>
 #include <bubble_sort_benchmark.h>
+#include <cocktail_sort_benchmark.h>
 #include <comb_sort_benchmark.h>
 #include <quick_sort_benchmark.h>
 #include <merge_sort_benchmark.h>
@@ -18,11 +19,12 @@
 
 
 
+
 constexpr size_t RANGE_START_SLOW = 1 << 10;
-constexpr size_t RANGE_END_SLOW   = 1 << 16;
+constexpr size_t RANGE_END_SLOW   = 1 << 15;
 
 constexpr size_t RANGE_START_FAST = 1 << 15;
-constexpr size_t RANGE_END_FAST   = 1 << 24;
+constexpr size_t RANGE_END_FAST   = 1 << 22;
 constexpr int RANGE_MULTIPLIER = 2;
 
 
@@ -50,6 +52,16 @@ void benchmark_random_values(benchmark::State& state) {
         sorting_functor(begin(v), end(v), DS::gt<TYPE>);
     }
 }
+
+
+/////////////////////////////////////////////////
+/// @Brief Cocktail Sort random values benchmark
+/////////////////////////////////////////////////
+BENCHMARK_TEMPLATE(benchmark_random_values, cocktail_sorter)
+->Unit(TIME_UNIT)
+->MinTime(MIN_TIME)
+->RangeMultiplier(RANGE_MULTIPLIER)
+->Range(RANGE_START_SLOW, RANGE_END_SLOW);
 
 /////////////////////////////////////////////////
 /// @Brief Comb Sort random values benchmark

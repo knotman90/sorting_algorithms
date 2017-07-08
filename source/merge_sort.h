@@ -14,8 +14,8 @@ namespace DS {
 // Compare has type: D -> D -> bool
 //[s1,e1] and [e1+1,e2] are two ordered sequences. This methods reaggarne the whole
 // interval [s1,e2] in a sorted sequence
-template < typename Container, typename Iterator, typename Compare>
-void merge(Container& scratch,  Iterator s1,  Iterator e1,  Iterator e2, Compare cmp, Iterator scratch_s) {
+template <typename Iterator, typename Compare>
+void merge(Iterator s1,  Iterator e1,  Iterator e2, Compare cmp, Iterator scratch_s) {
 	Iterator s2 = e1 + 1;
 	Iterator startv = s1;
 	Iterator starts = scratch_s;
@@ -69,7 +69,7 @@ void mergesort_helper(Container& scratch, Iterator s, Iterator e, Compare cmp, I
 		//sort the second half
 		mergesort_helper(scratch, midpoint + 1	, e , cmp, scratch_s);
 		
-		merge(scratch, s, midpoint, e, cmp, scratch_s_ori);
+		merge(s, midpoint, e, cmp, scratch_s_ori);
 	}
 }
 

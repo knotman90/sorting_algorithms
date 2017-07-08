@@ -7,9 +7,6 @@
 
 namespace DS {
 
-
-
-
 /////////////////////////////////////////////////
 /// @Brief Coctail sort
 /// At each iterator the min or max element are at the
@@ -17,50 +14,48 @@ namespace DS {
 /// of a sorted sequence. We can stop there.
 /////////////////////////////////////////////////
 // Compare has type: D -> D -> bool
-template < typename Iterator, typename Compare>
+template <typename Iterator, typename Compare>
 void cocktail_sort(Iterator s, Iterator e, Compare cmp) {
-	const auto d = distance(s, e);
-	if (d <= 1)
-		return;
+  const auto d = distance(s, e);
+  if (d <= 1) return;
 
-	Iterator lower_limit(s);
-	Iterator upper_limit(e - 1);
+  Iterator lower_limit(s);
+  Iterator upper_limit(e - 1);
 
-	bool go = true;
-	while (true ) {
-		Iterator new_upper_limit(s);
-		Iterator it1 (s);
-		Iterator it2 (s + 1);
-		for (; it2 <= upper_limit; ++it1, ++it2)
-			if (cmp(*it2, *it1)) {
-				std::swap(*it2, *it1);
-				new_upper_limit = it1;
-			}
+  
+  while (true) {
+    Iterator new_upper_limit(s);
+    Iterator it1(s);
+    Iterator it2(s + 1);
+    for (; it2 <= upper_limit; ++it1, ++it2) {
+      if (cmp(*it2, *it1)) {
+        std::swap(*it2, *it1);
+        new_upper_limit = it1;
+      }
+    }
+   
 
-			if(new_upper_limit==s)
-				break; //sorted no swaps took place
+    if (new_upper_limit == s) break;  // sorted no swaps took place
 
-		upper_limit = new_upper_limit;
+    upper_limit = new_upper_limit;
 
-//other way round
-		//at least 1 element below new_upper_limit
-		Iterator new_lower_limit(new_upper_limit);
-		it1 = new_upper_limit;
-		it2 = lower_limit-1;
-		for (; it2 >= lower_limit; --it1, --it2){
-			if (cmp(*it1, *it2)) { //opposite order w.t.r. to the previous round
-				std::swap(*it1, *it2);
-				new_lower_limit = it1;
-			}
-		}
+    // other way round
+    // at least 1 element below new_upper_limit
+    Iterator new_lower_limit(new_upper_limit);
+    it1 = new_upper_limit;
+    it2 = it1-1;
+    for (; it2 >= lower_limit; --it1, --it2) {
+      if (cmp(*it1, *it2)) {  // opposite order w.t.r. to the previous round
+        std::swap(*it1, *it2);
+        new_lower_limit = it2;
+      }
+    }
 
-		if(new_lower_limit == new_upper_limit)
-			break;
-
-
-	}
+    if (new_lower_limit == new_upper_limit) break;
+    lower_limit = new_lower_limit;
+  }
 }
 
-}// namespace DS
+}  // namespace DS
 
-#endif //DS_BUBBLE_SORT_H_
+#endif  // DS_BUBBLE_SORT_H_

@@ -10,10 +10,11 @@
 TEST_P(RandomVectorSortTest, cocktail){
     std::cout<<"Input size = "<<v.size()<<std::endl;
     ASSERT_EQ(v.size(),SIZE);
-    //DS::print(ALL(v));
+    if(SIZE<30)
+    DS::print(ALL(v));
     //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
     DS::cocktail_sort(begin(v),end(v),DS::lt<TYPE>);
-    //DS::print(ALL(v));
+    if (SIZE < 30) DS::print(ALL(v));
     ASSERT_EQ(v.size(),SIZE);
     ASSERT_EQ(checksorting(v,ASCENDING),true);
 }
