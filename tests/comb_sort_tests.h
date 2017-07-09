@@ -7,26 +7,21 @@
 
 
 
-TEST_P(RandomVectorSortTest, comb_sort){
-    std::cout<<"Input size = "<<v.size()<<std::endl;
-    ASSERT_EQ(v.size(),SIZE);
-    //DS::print(ALL(v));
-    //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
-    DS::comb_sort(begin(v),end(v),DS::lt<TYPE>);
-    //DS::print(ALL(v));
-    ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(checksorting(v,ASCENDING),true);
+TEST_P(RandomVectorSortTest, comb_sort) {
+    TEST_BODY(v,
+              DS::comb_sort,
+              ASCENDING,
+              std::less<TYPE>()
+             );
 }
 
-TEST_P(RandomVectorSortTest, comb_sort_ascending){
-    std::cout<<"Input size = "<<v.size()<<std::endl;ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(v.size(),SIZE);
-    //DS::print(ALL(v));
-    //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
-    DS::comb_sort(begin(v),end(v),DS::gt<TYPE>);
-    //DS::print(ALL(v));
-    ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(checksorting(v,DESCENDING),true);
+TEST_P(RandomVectorSortTest, comb_sort_ascending) {
+    TEST_BODY(v,
+              DS::comb_sort,
+              DESCENDING,
+              std::greater<TYPE>()
+             );
+}
 }
 
 

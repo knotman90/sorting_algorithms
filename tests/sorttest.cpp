@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 #include <sorting_test_utils.h>
+#include <bubble_sort_tests.h>
 #include <cocktail_sort_tests.h>
 #include <comb_sort_tests.h>
-#include <bubble_sort_tests.h>
 #include <selection_sort_tests.h>
 #include <insertion_sort_tests.h>
 #include <merge_sort_tests.h>

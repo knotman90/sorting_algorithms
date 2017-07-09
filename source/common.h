@@ -44,7 +44,7 @@
 namespace DS {
 template <typename Iterator, typename Lambda>
 
-void for_each(Iterator s, Iterator e, Lambda l) {
+void for_each(Iterator s,  Iterator e, Lambda l) {
   while (s != e) {
     l(*s);
     s++;

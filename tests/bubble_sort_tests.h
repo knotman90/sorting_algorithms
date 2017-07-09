@@ -2,54 +2,85 @@
 #define DS_BUBBLE_SORT_TESTS_H_
 
 #include <gtest/gtest.h>
+#include <functional>
 #include <sorting_test_utils.h>
 #include <bubble_sort.h>
-//#include <common.h>
+
+using std::less;
+using std::greater;
 
 
-TEST_P(RandomVectorSortTest, bubblesort){
-    std::cout<<"Input size = "<<v.size()<<std::endl;
-    ASSERT_EQ(v.size(),SIZE);
-    //DS::print(ALL(v));
-    //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
-    DS::bubblesort_naive(begin(v),end(v),DS::lt<TYPE>);
-    //DS::print(ALL(v));
-    ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(checksorting(v,ASCENDING),true);
+
+//Uniform Container Test --------------------------------------
+
+TEST_P(UniformVectorSortTest, bubblesort_uniform) {
+    TEST_BODY(v,
+              DS::bubblesort_naive,
+              ASCENDING,
+              std::less<TYPE>()
+             );
 }
 
-TEST_P(RandomVectorSortTest, bubblesort_ascending){
-    std::cout<<"Input size = "<<v.size()<<std::endl;ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(v.size(),SIZE);
-    //DS::print(ALL(v));
-    //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
-    DS::bubblesort_naive(begin(v),end(v),DS::gt<TYPE>);
-    //DS::print(ALL(v));
-    ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(checksorting(v,DESCENDING),true);
+TEST_P(UniformVectorSortTest, bubblesort_descending_uniform) {
+    TEST_BODY(v,
+              DS::bubblesort_naive,
+              DESCENDING,
+              std::greater<TYPE>()
+             );
+}
+
+TEST_P(UniformVectorSortTest, bubblesort_improved_uniform) {
+    TEST_BODY(v,
+              DS::bubblesort_improved,
+              ASCENDING,
+              std::less<TYPE>()
+             );
+}
+
+TEST_P(UniformVectorSortTest, bubblesort_improved_descending_uniform) {
+    TEST_BODY(v,
+              DS::bubblesort_improved,
+              DESCENDING,
+              std::greater<TYPE>()
+             );
 }
 
 
-TEST_P(RandomVectorSortTest, bubblesort_improved){
-    std::cout<<"Input size = "<<v.size()<<std::endl;
-    ASSERT_EQ(v.size(),SIZE);
-    //DS::print(ALL(v));
-    //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
-    DS::bubblesort_improved(begin(v),end(v),DS::lt<TYPE>);
-    //DS::print(ALL(v));
-    ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(checksorting(v,ASCENDING),true);
+//Random Container Test------------------------------
+
+TEST_P(RandomVectorSortTest, bubblesort_random) {
+
+    TEST_BODY(v,
+              DS::bubblesort_naive,
+              ASCENDING,
+              std::less<TYPE>()
+             );
 }
 
-TEST_P(RandomVectorSortTest, bubblesort_improved_ascending){
-    std::cout<<"Input size = "<<v.size()<<std::endl;ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(v.size(),SIZE);
-    //DS::print(ALL(v));
-    //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
-    DS::bubblesort_improved(begin(v),end(v),DS::gt<TYPE>);
-    //DS::print(ALL(v));
-    ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(checksorting(v,DESCENDING),true);
+TEST_P(RandomVectorSortTest, bubblesort_descending_random) {
+    TEST_BODY(v,
+              DS::bubblesort_naive,
+              DESCENDING,
+              std::greater<TYPE>()
+             );
+
+}
+
+
+TEST_P(RandomVectorSortTest, bubblesort_improved_random) {
+    TEST_BODY(v,
+              DS::bubblesort_improved,
+              ASCENDING,
+              std::less<TYPE>()
+             );
+}
+
+TEST_P(RandomVectorSortTest, bubblesort_improved_descending_random) {
+    TEST_BODY(v,
+              DS::bubblesort_naive,
+              DESCENDING,
+              std::greater<TYPE>()
+             );
 }
 
 

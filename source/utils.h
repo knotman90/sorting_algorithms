@@ -4,6 +4,19 @@
 #include <random>
 #include <algorithm> //generate_n
 
+//add this to the test to print the content
+//DS::print(ALL(v));
+#define TEST_BODY(CONTAINER_NAME, SORT_FN , ASCENDING_ORDER, CMP_FN)    \
+    std::cout<<"Input size = "<<(CONTAINER_NAME).size()<<std::endl;     \
+    ASSERT_EQ((CONTAINER_NAME).size(),SIZE);                            \
+    (SORT_FN)( ((CONTAINER_NAME).begin()) , ((CONTAINER_NAME).end()), (CMP_FN));\
+    ASSERT_EQ((CONTAINER_NAME).size(),SIZE); \
+    ASSERT_EQ(checksorting(v,ASCENDING_ORDER),true);
+
+//change type to the type of random object you want to g
+typedef int TYPE;
+typedef std::size_t SIZE_TYPE;
+
 std::string random_string( size_t length )
 {
 	auto randchar = []() -> char
@@ -48,9 +61,7 @@ randObject(const M _S){
 	return random_string(_S);
 }*/
 
-//change type to the type of random object you want to g
-typedef int TYPE;
-typedef std::size_t SIZE_TYPE;
+
 
 template<typename Container>
 void populateRandom(Container&v, const size_t SIZE) {
@@ -58,10 +69,28 @@ void populateRandom(Container&v, const size_t SIZE) {
 	std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
 	if (SIZE <= 0)
 		return;
-	v.resize(SIZE);
+	v.reserve(SIZE);
 	for (size_t i = 0; i < SIZE ; i++)
-		v[i] = static_cast<TYPE>(randObject<TYPE, SIZE_TYPE>(SIZE, gen));
+		v.push_back(static_cast<TYPE>(randObject<TYPE, SIZE_TYPE>(SIZE, gen)));
 }
+
+
+template<typename Container>
+void populateUniform(Container&v, const size_t SIZE) {
+	std::random_device rd;  //Will be used to obtain a seed for the random number engine
+	std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+	if (SIZE <= 0)
+		return;
+	v.reserve(SIZE);
+	const TYPE obj = static_cast<TYPE>(randObject<TYPE, SIZE_TYPE>(SIZE, gen));
+	for (size_t i = 0; i < SIZE ; i++)
+		v.push_back(obj);
+}
+
+
+
+
+
 
 
 

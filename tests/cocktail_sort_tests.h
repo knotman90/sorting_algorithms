@@ -7,27 +7,21 @@
 //#include <common.h>
 
 
-TEST_P(RandomVectorSortTest, cocktail){
-    std::cout<<"Input size = "<<v.size()<<std::endl;
-    ASSERT_EQ(v.size(),SIZE);
-    if(SIZE<30)
-    DS::print(ALL(v));
-    //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
-    DS::cocktail_sort(begin(v),end(v),DS::lt<TYPE>);
-    if (SIZE < 30) DS::print(ALL(v));
-    ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(checksorting(v,ASCENDING),true);
+TEST_P(RandomVectorSortTest, cocktail) {
+    TEST_BODY(v,
+              DS::cocktail_sort,
+              ASCENDING,
+              std::less<TYPE>()
+             );
+
 }
 
-TEST_P(RandomVectorSortTest, cocktail_ascending){
-    std::cout<<"Input size = "<<v.size()<<std::endl;ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(v.size(),SIZE);
-    //DS::print(ALL(v));
-    //std::cout<<"begin"<<std::distance(begin(v),end(v))<<std::endl;
-    DS::cocktail_sort(begin(v),end(v),DS::gt<TYPE>);
-    //DS::print(ALL(v));
-    ASSERT_EQ(v.size(),SIZE);
-    ASSERT_EQ(checksorting(v,DESCENDING),true);
+TEST_P(RandomVectorSortTest, cocktail_ascending) {
+    TEST_BODY(v,
+              DS::cocktail_sort,
+              DESCENDING,
+              std::greater<TYPE>()
+             );
 }
 
 
